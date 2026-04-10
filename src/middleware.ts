@@ -3,12 +3,12 @@ import { defineMiddleware } from "astro:middleware";
 const PUBLIC_PATHS = ["/login", "/api/login"];
 
 export const onRequest = defineMiddleware(
-	async ({ locals, url, cookies, redirect }, next) => {
+	async ({ url, cookies, redirect }, next) => {
 		if (PUBLIC_PATHS.includes(url.pathname)) {
 			return next();
 		}
 
-		const password = locals.runtime.env.PASSWORD;
+		const password = import.meta.env.PASSWORD;
 
 		if (!password) {
 			return next();

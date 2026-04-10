@@ -1,9 +1,9 @@
 import type { APIRoute } from "astro";
 
-export const POST: APIRoute = async ({ request, locals, redirect, cookies }) => {
+export const POST: APIRoute = async ({ request, redirect, cookies }) => {
 	const formData = await request.formData();
 	const password = formData.get("password") as string;
-	const envPassword = locals.runtime.env.PASSWORD;
+	const envPassword = import.meta.env.PASSWORD;
 	const redirectTo = (formData.get("redirect") as string | null) ?? "/";
 	const safeRedirect = redirectTo.startsWith("/") ? redirectTo : "/";
 
