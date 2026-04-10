@@ -1,5 +1,9 @@
-type Runtime = import("@astrojs/cloudflare").Runtime<Env>;
+/// <reference types="astro/client" />
 
-declare namespace App {
-  interface Locals extends Runtime {}
+interface ImportMetaEnv {
+	readonly PASSWORD?: string;
+}
+
+interface ImportMeta {
+	readonly env: ImportMetaEnv;
 }
