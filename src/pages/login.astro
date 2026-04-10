@@ -1,0 +1,102 @@
+---
+import { SITE_TITLE } from '../consts';
+
+const error = Astro.url.searchParams.get('error');
+const redirectTo = Astro.url.searchParams.get('redirect') ?? '/';
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<title>Login – {SITE_TITLE}</title>
+		<style>
+			:root {
+				--accent: #2337ff;
+				--gray-dark: 34, 41, 57;
+				--gray-light: 229, 233, 240;
+				--gray-gradient: rgba(var(--gray-light), 50%), #fff;
+			}
+			* { box-sizing: border-box; }
+			body {
+				font-family: sans-serif;
+				margin: 0;
+				min-height: 100vh;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				background: linear-gradient(var(--gray-gradient)) no-repeat;
+				background-size: 100% 600px;
+				color: rgb(var(--gray-dark));
+			}
+			.card {
+				background: #fff;
+				border-radius: 12px;
+				box-shadow: 0 2px 24px rgba(0,0,0,0.10);
+				padding: 2.5rem 2rem;
+				width: 100%;
+				max-width: 360px;
+			}
+			h1 {
+				margin: 0 0 1.5rem;
+				font-size: 1.5rem;
+				text-align: center;
+			}
+			label {
+				display: block;
+				margin-bottom: 0.4rem;
+				font-size: 0.9rem;
+				font-weight: 600;
+			}
+			input[type="password"] {
+				width: 100%;
+				padding: 0.6rem 0.8rem;
+				font-size: 1rem;
+				border: 1px solid rgb(var(--gray-light));
+				border-radius: 6px;
+				margin-bottom: 1rem;
+				outline: none;
+				transition: border-color 0.2s;
+			}
+			input[type="password"]:focus {
+				border-color: var(--accent);
+			}
+			button {
+				width: 100%;
+				padding: 0.7rem;
+				font-size: 1rem;
+				font-weight: 600;
+				background: var(--accent);
+				color: #fff;
+				border: none;
+				border-radius: 6px;
+				cursor: pointer;
+				transition: opacity 0.2s;
+			}
+			button:hover { opacity: 0.85; }
+			.error {
+				background: #fef2f2;
+				color: #b91c1c;
+				border: 1px solid #fca5a5;
+				border-radius: 6px;
+				padding: 0.6rem 0.8rem;
+				margin-bottom: 1rem;
+				font-size: 0.9rem;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="card">
+			<h1>🔒 {SITE_TITLE}</h1>
+			{error && <p class="error">Incorrect password. Please try again.</p>}
+			<form method="POST" action="/api/login">
+				<input type="hidden" name="redirect" value={redirectTo} />
+				<label for="password">Password</label>
+				<input type="password" id="password" name="password" required autofocus />
+				<button type="submit">Sign in</button>
+			</form>
+		</div>
+	</body>
+</html>
